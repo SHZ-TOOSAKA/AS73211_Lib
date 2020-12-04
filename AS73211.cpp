@@ -13,7 +13,8 @@ AS73211::AS73211(uint8_t slave){       //传入从机地址
 bool AS73211::begin(){
   _wire->begin();
   softwareReset();
-  setGainAndTime(Gain1,Time256ms);
+  //setGainAndTime(Gain1,Time256ms);   //原库的增益和积分时间设置
+  setGainAndTime(_COLOR6_CREG1_GAIN_XYZ_16,_COLOR6_CREG1_TIME_64ms);   //设置增益和积分时间
   setConfiguration(
 		true,
 		Divider1,
@@ -38,7 +39,7 @@ OperationalState AS73211::getState(){
 	return (OperationalState)color6_readByte(_COLOR6_REG_OPERATIONAL_STATE);
 }
 
-uint8_t AS73211::getDeviceID(){                  //获取设备ID
+uint8_t AS73211::getDeviceID(){                  //获取设备ID  //假的，读取的是x通道的数据
 	return color6_readByte(_COLOR6_REG_API_GENERATION);
 }
 
